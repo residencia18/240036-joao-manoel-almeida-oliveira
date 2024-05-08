@@ -1,5 +1,3 @@
-import dataclasses
-
 class Conta:
     def __init__(self, id, accountName, balance, agencyId):
         self.id = id

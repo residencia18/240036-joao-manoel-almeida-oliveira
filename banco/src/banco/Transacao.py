@@ -1,5 +1,3 @@
-from src.banco.Conta import Conta
-
 class Transacao:
     def __init__(self, id, value, accountRecipient, accountSender):
         if value <= 0:
