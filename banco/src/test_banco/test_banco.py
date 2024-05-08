@@ -25,6 +25,10 @@ class Test_Banco:
         assert conta1.balance == 0
         assert conta2.balance == 2000
 
+    def test_transacao_execute_reject_zero_and_negative(self):
+        conta1 = Conta(1, "Conta1", 1000, 1)
+        conta2 = Conta(2, "Conta2", 1000, 2)
+
         try:
             assert Transacao(5, -1000, conta2, conta1).execute() == False
             assert conta1.balance == 0
@@ -37,8 +41,10 @@ class Test_Banco:
         except ValueError as e:
             assert str(e) == "Value must be greater than 0"
 
+    def test_transacao_execute_reject__same_account(self):
+        conta1 = Conta(1, "Conta1", 1000, 1)
+
         try:
             assert Transacao(7, 1000, conta1, conta1).execute() == False
         except ValueError as e:
             assert str(e) == "Account recipient and account sender must be different"
-
