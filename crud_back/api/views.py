@@ -19,7 +19,7 @@ class Login(ObtainAuthToken):
             'email': user.email
         })
 
-class SingInView(generics.CreateAPIView):
+class SignInView(generics.CreateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = SingiInSerializer
     permission_classes = [permissions.AllowAny]
