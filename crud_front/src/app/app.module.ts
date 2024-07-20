@@ -19,6 +19,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/interceptor/auth.interceptor';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,7 @@ import { AuthInterceptor } from './services/interceptor/auth.interceptor';
     InputTextModule,
     PasswordModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

@@ -2,19 +2,21 @@
     <div class="flex flex-column align-items-center justify-content-center">
         <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
             <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
-                <div>
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                    <input id="email1" type="text" [(ngModel)]="user" placeholder="Email address" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+                <form [formGroup]="formLogin" (ngSubmit)="login()">
+                    <div>
+                        <label for="username1" class="block text-900 text-xl font-medium mb-2">Nome de úsuario</label>
+                        <input id="username1" type="text" formControlName="username" placeholder="Nome de úsuario" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
 
-                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                    <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" [feedback]="false" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Senha</label>
+                        <p-password id="password1" formControlName="password" placeholder="Senha" [toggleMask]="true" [feedback]="false" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-                    <div class="flex align-items-center justify-content-between mb-5 gap-5">
-                        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Esqueceu a senha?</a>
+                        <div class="flex align-items-center justify-content-between mb-5 gap-5">
+                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Esqueceu a senha?</a>
+                        </div>
+                        <button type="submit" pButton pRipple label="Login" class="w-full p-3 text-xl" [disabled]="formLogin.invalid"></button>
+                        <a class="font-medium underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Cadastre-se</a>
                     </div>
-                    <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="login()"></button>
-                    <a class="font-medium underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Cadastre-se</a>
-                </div>
+                </form>
             </div>
         </div>
     </div>

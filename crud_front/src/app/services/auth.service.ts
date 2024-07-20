@@ -9,7 +9,6 @@ interface AuthResponseData {
   email: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -90,5 +89,9 @@ export class AuthService {
 
   isLoggedIn() {
     return this.usuario.value.token != null;
+  }
+
+  getToken() {
+    return this.usuario.value.token;
   }
 }
