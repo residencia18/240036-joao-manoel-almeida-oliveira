@@ -4,12 +4,9 @@ import { BehaviorSubject, Subject, tap } from 'rxjs';
 import { User } from '../models/user';
 
 interface AuthResponseData {
-  idToken: string;
+  token: string;
+  user_id: string;
   email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
 }
 
 
@@ -17,7 +14,7 @@ interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  usuario = new BehaviorSubject<User>(new User('', '', '', new Date()));
+  usuario = new BehaviorSubject<User>(new User('', '', ''));
 
   constructor(private http: HttpClient) { }
 
@@ -31,12 +28,10 @@ export class AuthService {
       returnSecureToken: true
    }).pipe(
       tap(resData => {
-        const expiracaoData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
         const usuario = new User(
           resData.email,
-          resData.localId,
-          resData.idToken,
-          expiracaoData
+          resData.user_id,
+          resData.token,
         );
 
         this.usuario.next(usuario);
@@ -45,32 +40,29 @@ export class AuthService {
    );
   }
 
-  loginUser(email: string, password: string) {
-    const url = `http://127.0.0.1:8000/api/login`;
+  loginUser(user: string, password: string) {
+    const url = `http://127.0.0.1:8000/api/login/`;
 
     return this.http.post<AuthResponseData>(url,
     {
-      email: email,
-      password: password,
-      returnSecureToken: true
+      username: user,
+      password: password
    }).pipe(
     tap(resData => {
-      const expiracaoData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-        const usuario = new User(
-          resData.email,
-          resData.localId,
-          resData.idToken,
-          expiracaoData
-        );
-        this.usuario.next(usuario);
-        localStorage.setItem('userData', JSON.stringify(usuario));
+      const usuario = new User(
+        resData.email,
+        resData.user_id,
+        resData.token,
+      );
+      this.usuario.next(usuario);
+      localStorage.setItem('userData', JSON.stringify(usuario));
     }),
    );
   }
 
   autoLogin() {
     const userData :{
-      email: string;
+      username: string;
       id: string;
       _token: string;
       _tokenExpirationDate: string;
@@ -82,10 +74,9 @@ export class AuthService {
     }
 
     const loadedUser = new User(
-      userData.email,
+      userData.username,
       userData.id,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
+      userData._token
     );
 
     if(loadedUser.token) {
@@ -94,7 +85,7 @@ export class AuthService {
   }
 
   logout() {
-    this.usuario.next(new User('', '', '', new Date()));
+    this.usuario.next(new User('', '', ''));
   }
 
   isLoggedIn() {

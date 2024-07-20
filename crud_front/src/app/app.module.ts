@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +16,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,17 +26,20 @@ import { InputTextModule } from 'primeng/inputtext';
     PerfilComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     ButtonModule,
+    CommonModule,
     CheckboxModule,
     FormsModule,
+    InputTextModule,
     PasswordModule,
-    InputTextModule
+    HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    provideAnimationsAsync(), provideHttpClient(withFetch()), provideClientHydration()
   ],
   bootstrap: [AppComponent]
 })
