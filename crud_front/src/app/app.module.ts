@@ -20,12 +20,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/interceptor/auth.interceptor';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { SigninComponent } from './components/signin/signin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PerfilComponent
+    PerfilComponent,
+    SigninComponent
   ],
   imports: [
     AppRoutingModule,
@@ -41,7 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     provideAnimationsAsync(), provideHttpClient(withFetch()), provideClientHydration()
   ],
   bootstrap: [AppComponent]

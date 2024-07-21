@@ -23,7 +23,7 @@ export class DatabaseService {
         Authorization: `Token ${token}`
       }
     }).pipe(tap(resData => {
-      console.log(resData);
+      // console.log(resData);
     }));
   }
 
@@ -46,7 +46,7 @@ export class DatabaseService {
         Authorization: `Token ${token}`
       }
     }).pipe(tap(resData => {
-      console.log(resData);
+      // console.log(resData);
     }));
   }
 
@@ -64,7 +64,7 @@ export class DatabaseService {
         Authorization: `Token ${token}`
       }
     }).pipe(tap(resData => {
-      console.log(resData);
+      // console.log(resData);
     }));
   }
 
@@ -75,10 +75,10 @@ export class DatabaseService {
     last_name: string;
     password: string;
   }) {
-    const url = `http://127.0.0.1:8000/api/user/`;
+    const url = `http://127.0.0.1:8000/api/signin/`;
 
     return this.http.post(url, user).pipe(tap(resData => {
-      console.log(resData);
+      // console.log(resData);
     }));
   }
 }

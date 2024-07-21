@@ -45,3 +45,11 @@ class UsuarioView(generics.RetrieveUpdateAPIView):
             serializer.save()
             return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
+    
+    def delete(self, request, *args, **kwargs):
+        try:
+            user = self.get_object()
+            user.delete()
+            return Response(status=204)
+        except:
+            return Response(status=400)

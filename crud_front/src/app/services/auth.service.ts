@@ -23,8 +23,7 @@ export class AuthService {
    return this.http.post<AuthResponseData>(url, 
    {
       email: email,
-      password: password,
-      returnSecureToken: true
+      password: password
    }).pipe(
       tap(resData => {
         const usuario = new User(
@@ -88,7 +87,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.usuario.value.token != null;
+    return this.usuario.value.token != '';
   }
 
   getToken() {

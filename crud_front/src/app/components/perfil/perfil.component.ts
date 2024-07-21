@@ -16,7 +16,7 @@ export class PerfilComponent implements OnInit {
 
   constructor(private databaseService: DatabaseService, private fb: FormBuilder, private router: Router) {
     this.formUser = fb.group({
-      username: ['', Validators.required],
+      username: [{ value: '', disabled: true }],
       email: ['', Validators.required],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required]
@@ -26,8 +26,6 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
     this.databaseService.getUser()?.subscribe(
       (resData: any) => {
-        console.log(resData);
-        
         this.formUser.setValue({
           username: resData.username,
           email: resData.email,
@@ -45,6 +43,7 @@ export class PerfilComponent implements OnInit {
 
   updateUser() {
     if (this.formUser.valid) {
+      console.log(this.formUser.value);
       this.databaseService.updateUser(this.formUser.value)?.pipe(first()).subscribe(
         resData => {
           console.log(resData);
